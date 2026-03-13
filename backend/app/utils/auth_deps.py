@@ -1,7 +1,6 @@
 from typing import Annotated
 from fastapi import Depends, HTTPException, status
-import supabase
-from supabase_auth import User
+from app.database import supabase
 from app.config import settings
 import bcrypt 
 from jose import jwt
@@ -101,7 +100,9 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         
         # Añadir el rol al objeto usuario (útil para endpoints)
         usuario = response.data[0]
-        usuario["rol"] = rol  # ← Añades el rol al resultado
+        usuario["rol"] = rol
+        usuario["sub"] = user_id 
+        return usuario
         
         return usuario
         
