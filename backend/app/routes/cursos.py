@@ -14,7 +14,13 @@ async def get_cursos(usuario = Depends(auth_deps.get_current_user)):
     else:
         resul = supabase.table("incripciones").select("*").eq("estudiante_id", usuario["sub"]).execute()
     
+    return resul.data
+
+@router.get("/todosCursos")
+async def allCursos(usuario = Depends(auth_deps.get_current_user)):
     
+    if usuario["rol"] == "estudiante":
+        resul = supabase.table("cursos").select("*").execute()
     
     return resul.data
 
