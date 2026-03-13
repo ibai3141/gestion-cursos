@@ -11,7 +11,7 @@ from app.models import estudiante, profesor
 
 router = APIRouter(prefix="/auth", tags=["autenticación"])
 
-@router.post("/auth/registro/profesor", response_model=profesor.ProfesorResponse)
+@router.post("/registro/profesor", response_model=profesor.ProfesorResponse)
 async def altaProfesor(profesor_data: profesor.ProfesorCreate):
     
     # 1. Verificar si el email ya existe
@@ -31,7 +31,7 @@ async def altaProfesor(profesor_data: profesor.ProfesorCreate):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     
-@router.post("/auth/registro/estudiante", response_model=estudiante.EstudianteResponse)
+@router.post("/registro/estudiante", response_model=estudiante.EstudianteResponse)
 async def altaAlumno(estudiante_data: estudiante.EstudianteCreate):
     
     # 1. Verificar si el email ya existe
@@ -51,7 +51,7 @@ async def altaAlumno(estudiante_data: estudiante.EstudianteCreate):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.post("/auth/login")
+@router.post("/login")
 async def login(email: str, contrasenia:str):
     
     # Buscar en profesores
@@ -73,7 +73,7 @@ async def login(email: str, contrasenia:str):
     if not auth_deps.verify_password(contrasenia, usuario["password_hash"]):
         raise HTTPException(status_code=401, detail="Password incorrecto")
     
-    token_data = {"sub": usuario["id"], "rol": rol}
+    token_data = {"sub": str(usuario["id"]), "rol": rol}  # ← Convertir a string
     token = auth_deps.create_access_tokken(token_data)
     
     return {"access_token": token, "token_type": "bearer", "rol": rol}
