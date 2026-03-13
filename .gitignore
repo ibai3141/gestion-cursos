@@ -1,0 +1,28 @@
+# Entornos virtuales de Python
+venv/
+env/
+ENV/
+.venv/
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribución / paquetes
+dist/
+build/
+*.egg-info/
+
+# Archivos de entorno (¡IMPORTANTE!)
+.env
+.env.local
+.env.production
+.env.development
+*.env
+
+# Liquibase
+liquibase/liquibase.log
+liquibase/*.lock

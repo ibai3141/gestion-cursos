@@ -1,0 +1,20 @@
+# Framework web
+fastapi
+uvicorn
+
+# Base de datos
+supabase
+
+# Variables de entorno
+python-dotenv
+
+# Cliente HTTP
+httpx
+
+# Procesamiento de formularios (para login)
+python-multipart
+
+# Autenticación JWT y contraseñas
+python-jose[cryptography]  # Para crear y validar JWT
+passlib[bcrypt]           # Para hashear y verificar contraseñas
+bcrypt                    # Dependencia de passlib
