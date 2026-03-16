@@ -1,0 +1,8 @@
+# Supabase
+SUPABASE_URL=https://wqdvgfhhjjeuspwdqndz.supabase.co
+SUPABASE_KEY=sb_secret_ST5hA9cSmD18xw9NrOgUhw_SSXGrak4
+
+# JWT
+SECRET_KEY=5c04ead35ff594c221863ec1380d2caadbfc5a0ab076d8abbdfc1bea87e9a9f5
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
