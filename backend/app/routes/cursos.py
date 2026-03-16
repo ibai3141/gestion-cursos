@@ -11,8 +11,10 @@ async def get_cursos(usuario = Depends(auth_deps.get_current_user)):
     if usuario["rol"] == "profesor":
         resul = supabase.table("cursos").select("*").eq("profesor_id", usuario["sub"]).execute()
         
+    elif usuario["rol"] == "estudiante":
+        resul = supabase.table("inscripciones").select("*").eq("estudiante_id", usuario["sub"]).execute()
     else:
-        resul = supabase.table("incripciones").select("*").eq("estudiante_id", usuario["sub"]).execute()
+        raise HTTPException(status_code=403, detail="Rol no autorizado")
     
     return resul.data
 
@@ -21,6 +23,8 @@ async def allCursos(usuario = Depends(auth_deps.get_current_user)):
     
     if usuario["rol"] == "estudiante":
         resul = supabase.table("cursos").select("*").execute()
+    else:
+        raise HTTPException(status_code=403, detail="Solo los estudiantes pueden ver todos los cursos")
     
     return resul.data
 
