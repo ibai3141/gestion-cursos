@@ -170,6 +170,20 @@ button:disabled {
   cursor: wait;
 }
 
+.microsoft-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 14px;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-weight: 700;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+}
+
 .list {
   display: grid;
   gap: 14px;

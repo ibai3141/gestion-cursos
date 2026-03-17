@@ -57,3 +57,11 @@ export async function inscribirseEnCurso(token, curso_id) {
     body: { curso_id },
   });
 }
+
+export function getMicrosoftLoginUrl() {
+  return `${API_BASE_URL}/auth/microsoft/login`;
+}
+
+export function getMicrosoftRegisterUrl(rol) {
+  return `${API_BASE_URL}/auth/microsoft/registro/${rol}`;
+}

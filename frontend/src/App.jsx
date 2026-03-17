@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import {
   crearCurso,
   getMisCursos,
+  getMicrosoftLoginUrl,
+  getMicrosoftRegisterUrl,
   getProfesores,
   getTodosLosCursos,
   inscribirseEnCurso,
@@ -46,6 +48,39 @@ function App() {
   });
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const authStatus = params.get("auth_status");
+
+    if (!authStatus) {
+      return;
+    }
+
+    if (authStatus === "success") {
+      const nextSession = {
+        token: params.get("access_token"),
+        rol: params.get("rol"),
+        email: params.get("email"),
+      };
+
+      if (nextSession.token && nextSession.rol && nextSession.email) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(nextSession));
+        setSession(nextSession);
+        setFeedback(
+          params.get("action") === "registro"
+            ? "Registro con Microsoft completado."
+            : "Login con Microsoft completado."
+        );
+      }
+    }
+
+    if (authStatus === "error") {
+      setFeedback(params.get("message") ?? "Ha fallado la autenticacion con Microsoft.");
+    }
+
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }, []);
 
   useEffect(() => {
     if (!session?.token) {
@@ -226,6 +261,9 @@ function App() {
               <button type="submit" disabled={loading}>
                 {loading ? "Entrando..." : "Entrar"}
               </button>
+              <a className="microsoft-button" href={getMicrosoftLoginUrl()}>
+                Entrar con Microsoft
+              </a>
             </form>
           </section>
 
@@ -236,6 +274,9 @@ function App() {
               <button type="submit" disabled={loading}>
                 Crear profesor
               </button>
+              <a className="microsoft-button" href={getMicrosoftRegisterUrl("profesor")}>
+                Registrarse con Microsoft
+              </a>
             </form>
           </section>
 
@@ -246,6 +287,9 @@ function App() {
               <button type="submit" disabled={loading}>
                 Crear estudiante
               </button>
+              <a className="microsoft-button" href={getMicrosoftRegisterUrl("estudiante")}>
+                Registrarse con Microsoft
+              </a>
             </form>
           </section>
         </main>
