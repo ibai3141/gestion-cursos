@@ -11,6 +11,7 @@ import {
   registroEstudiante,
   registroProfesor,
 } from "./api";
+import "./App.css";
 
 const STORAGE_KEY = "gestion-cursos-session";
 
@@ -223,7 +224,7 @@ function App() {
           ) : (
             <>
               <span className="badge muted">sin sesion</span>
-              <p>Backend esperado en `http://127.0.0.1:8000`.</p>
+              <p>Configura `VITE_API_URL` con la URL publica de tu backend.</p>
             </>
           )}
         </div>
