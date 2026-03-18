@@ -27,5 +27,22 @@ class Settings:
         "openid profile email User.Read"
     )
     FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+    CORS_ALLOWED_ORIGINS = os.getenv(
+        "CORS_ALLOWED_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173"
+    )
+
+    @property
+    def cors_allowed_origins_list(self) -> list[str]:
+        origins = [
+            origin.strip()
+            for origin in self.CORS_ALLOWED_ORIGINS.split(",")
+            if origin.strip()
+        ]
+
+        if self.FRONTEND_URL and self.FRONTEND_URL not in origins:
+            origins.append(self.FRONTEND_URL)
+
+        return origins
 
 settings = Settings()
